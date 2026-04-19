@@ -1,0 +1,61 @@
+import java.util.*;
+class Node{
+    int data;
+    Node next;
+    Node(int data){
+        this.data = data;
+        this.next = null;
+    }
+}
+class LL{
+    Node head = null;
+    Node temp = null;
+    
+    void creation(int n, Scanner sc){
+       
+        for(int i=0;i<n;i++){
+            int val = sc.nextInt();
+        
+            Node newnode = new Node(val);
+            if(head==null){
+                head = newnode;
+                temp = newnode;
+            }
+            else{
+                temp.next = newnode;
+                temp = newnode;
+            }
+        }
+    }
+    
+    public void common(LL list1, LL list2){
+        Node temp1 = list1.head;
+        while(temp1!=null){
+            Node temp2 = list2.head;
+            while(temp2!=null){
+                if(temp1.data == temp2.data){
+                    System.out.print(temp1.data+" ");
+                    break;
+                }
+                temp2 = temp2.next;
+            }
+            temp1 = temp1.next;
+            
+        }
+        
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        LL list1 = new LL();
+        list1.creation(n, sc);
+        
+        int n1 = sc.nextInt();
+        LL list2 = new LL();
+        list2.creation(n1, sc);
+        
+        list1.common(list1,list2);
+    }
+} 
