@@ -1,0 +1,68 @@
+import java.util.*;
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        next = null;
+    }
+}
+class SLL {
+    Node head = null;
+    Node temp = null;
+    void create(int data) {
+        Node newnode = new Node(data);
+        if (head == null) {
+            head = newnode;
+            temp = newnode;
+        } else {
+            temp.next = newnode;
+            temp = newnode;
+        }
+    }
+
+    void reverseNextK(int k) {
+        if (head == null || head.next == null)
+            return;
+
+        Node first = head;          
+        Node current = head.next;   
+        Node prev = null;
+        Node next = null;
+
+        int count = 0;
+
+        while (current != null && count < k) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+            count++;
+        }
+        first.next.next = current; 
+        first.next = prev;         
+    }
+
+    void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int size = sc.nextInt();
+        SLL obj = new SLL();
+        for (int i = 0; i < size; i++) {
+            int val = sc.nextInt();
+            obj.create(val);
+        }
+        int k = sc.nextInt();
+        obj.reverseNextK(k);
+        obj.display();
+    }
+}
