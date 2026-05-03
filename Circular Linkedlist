@@ -1,0 +1,171 @@
+import java.util.*;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class CLL {
+    Node head = null;
+    Node temp = null; 
+
+    void creation(int data) {
+        Node newnode = new Node(data);
+
+        if (head == null) {
+            head = newnode;
+            temp = newnode;
+            newnode.next = head; 
+        } else {
+            temp.next = newnode;
+            newnode.next = head;
+            temp = newnode;
+        }
+    }
+
+    void display() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+
+        Node t = head;
+        do {
+            System.out.print(t.data + " ");
+            t = t.next;
+        } while (t != head);
+    }
+
+    void insert_front(int data) {
+        Node newnode = new Node(data);
+
+        if (head == null) {
+            head = newnode;
+            temp = newnode;
+            newnode.next = head;
+        } else {
+            newnode.next = head;
+            temp.next = newnode;
+            head = newnode;
+        }
+    }
+
+    void insert_end(int data) {
+        Node newnode = new Node(data);
+
+        if (head == null) {
+            head = newnode;
+            temp = newnode;
+            newnode.next = head;
+        } else {
+            temp.next = newnode;
+            newnode.next = head;
+            temp = newnode;
+        }
+    }
+
+    void insert_middle(int data, int pos) {
+        if (pos == 1) {
+            insert_front(data);
+            return;
+        }
+
+        Node newnode = new Node(data);
+        Node t = head;
+
+        for (int i = 1; i < pos - 1 && t.next != head; i++) {
+            t = t.next;
+        }
+
+        newnode.next = t.next;
+        t.next = newnode;
+
+        // if inserted at end, update temp
+        if (t == temp) {
+            temp = newnode;
+        }
+    }
+
+    void delete_front() {
+        if (head == null) return;
+
+        if (head == temp) {
+            head = null;
+            temp = null;
+        } else {
+            head = head.next;
+            temp.next = head;
+        }
+    }
+
+    void delete_end() {
+        if (head == null) return;
+
+        if (head == temp) {
+            head = null;
+            temp = null;
+            return;
+        }
+
+        Node t = head;
+
+        while (t.next != temp) {
+            t = t.next;
+        }
+
+        t.next = head;
+        temp = t;
+    }
+
+    void delete_middle(int pos) {
+        if (head == null) return;
+
+        if (pos == 1) {
+            delete_front();
+            return;
+        }
+
+        Node t = head;
+        Node prev = null;
+
+        for (int i = 1; i < pos && t.next != head; i++) {
+            prev = t;
+            t = t.next;
+        }
+
+        prev.next = t.next;
+
+        if (t == temp) {
+            temp = prev;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        CLL obj = new CLL();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            obj.creation(sc.nextInt());
+        }
+
+        obj.insert_front(sc.nextInt());
+        obj.insert_end(sc.nextInt());
+        obj.insert_middle(sc.nextInt(), sc.nextInt());
+
+        obj.delete_front();
+        obj.delete_end();
+        obj.delete_middle(sc.nextInt());
+
+        obj.display();
+    }
+}
